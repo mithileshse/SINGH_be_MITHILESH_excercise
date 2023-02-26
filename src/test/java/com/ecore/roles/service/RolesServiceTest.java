@@ -12,7 +12,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
-import java.util.UUID;
 
 import static com.ecore.roles.utils.TestData.DEVELOPER_ROLE;
 import static com.ecore.roles.utils.TestData.UUID_1;
@@ -37,8 +36,14 @@ class RolesServiceTest {
     @Mock
     private MembershipsService membershipsService;
 
+    // JUnit5 is more tolerant regarding the visibilities of Test classes than JUnit4,
+    // which required everything to be public.
+    // In this context, JUnit5 test classes can have any visibility but private,
+    // however, it is recommended to use
+    // the default package visibility, which improves readability of code.
+
     @Test
-    public void shouldCreateRole() {
+    void shouldCreateRole() {
         Role developerRole = DEVELOPER_ROLE();
         when(roleRepository.save(developerRole)).thenReturn(developerRole);
 
@@ -49,13 +54,13 @@ class RolesServiceTest {
     }
 
     @Test
-    public void shouldFailToCreateRoleWhenRoleIsNull() {
+    void shouldFailToCreateRoleWhenRoleIsNull() {
         assertThrows(NullPointerException.class,
                 () -> rolesService.createRole(null));
     }
 
     @Test
-    public void shouldReturnRoleWhenRoleIdExists() {
+    void shouldReturnRoleWhenRoleIdExists() {
         Role developerRole = DEVELOPER_ROLE();
         when(roleRepository.findById(developerRole.getId())).thenReturn(Optional.of(developerRole));
 
@@ -66,7 +71,7 @@ class RolesServiceTest {
     }
 
     @Test
-    public void shouldFailToGetRoleWhenRoleIdDoesNotExist() {
+    void shouldFailToGetRoleWhenRoleIdDoesNotExist() {
         ResourceNotFoundException exception = assertThrows(ResourceNotFoundException.class,
                 () -> rolesService.getRole(UUID_1));
 

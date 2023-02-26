@@ -27,10 +27,10 @@ public class TestData {
 
     public static final UUID ORDINARY_CORAL_LYNX_TEAM_UUID =
             UUID.fromString("7676a4bf-adfe-415c-941b-1739af07039b");
-    
+
     public static final UUID WEEKLY_PEACH_WILDEBEEST_TEAM_UUID =
             UUID.fromString("5071b4fc-43f2-47a2-8403-e934dc270606");
-    
+
     public static final UUID SURROUNDING_GOLD_PHEASANT_TEAM_UUID =
             UUID.fromString("7cf0d32d-036f-40b6-86ea-2473d4ccaecd");
 
@@ -70,7 +70,7 @@ public class TestData {
         }
         return team;
     }
-    
+
     public static Team WEEKLY_PEACH_WILDEBEEST_TEAM() {
         Team team = Team.builder()
                 .id(WEEKLY_PEACH_WILDEBEEST_TEAM_UUID)
@@ -78,7 +78,7 @@ public class TestData {
 
         return team;
     }
-    
+
     public static Team SURROUNDING_GOLD_PHEASANT_TEAM() {
         Team team = Team.builder()
                 .id(SURROUNDING_GOLD_PHEASANT_TEAM_UUID)
@@ -90,14 +90,14 @@ public class TestData {
     public static Team ORDINARY_CORAL_LYNX_TEAM() {
         return ORDINARY_CORAL_LYNX_TEAM(true);
     }
-    
+
     public static List<Team> DEFAULT_TEAMS() {
-    	List<Team> teams = new ArrayList<>();
-    	teams.add(ORDINARY_CORAL_LYNX_TEAM(true));
-    	teams.add(WEEKLY_PEACH_WILDEBEEST_TEAM());
-    	teams.add(SURROUNDING_GOLD_PHEASANT_TEAM());
-    	
-    	return teams;
+        List<Team> teams = new ArrayList<>();
+        teams.add(ORDINARY_CORAL_LYNX_TEAM(true));
+        teams.add(WEEKLY_PEACH_WILDEBEEST_TEAM());
+        teams.add(SURROUNDING_GOLD_PHEASANT_TEAM());
+
+        return teams;
     }
 
     public static User GIANNI_USER(boolean full) {
@@ -112,14 +112,14 @@ public class TestData {
         }
         return user;
     }
-    
+
     public static User JAREN_USER() {
         User user = User.builder()
                 .id(JAREN_USER_UUID)
-                .displayName("jarenKerluke").build();        
+                .displayName("jarenKerluke").build();
         return user;
     }
-    
+
     public static User MARION_USER() {
         User user = User.builder()
                 .id(MARION_USER_UUID)
@@ -130,13 +130,13 @@ public class TestData {
     public static User GIANNI_USER() {
         return GIANNI_USER(true);
     }
-    
+
     public static List<User> DEFAULT_USERS() {
         List<User> users = new ArrayList<>();
         users.add(GIANNI_USER(true));
         users.add(JAREN_USER());
         users.add(MARION_USER());
-        
+
         return users;
     }
 

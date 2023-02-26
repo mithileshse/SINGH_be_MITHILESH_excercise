@@ -22,14 +22,17 @@ import java.util.UUID;
 import static java.util.Optional.ofNullable;
 
 /**
- * Implementation of the MembershipsService interface that provides CRUD operations for Membership objects.
+ * Implementation of the MembershipsService interface that provides CRUD operations for Membership
+ * objects.
  *
- * This class is responsible for assigning roles to memberships, and retrieving all memberships associated with a given role.
+ * This class is responsible for assigning roles to memberships, and retrieving all memberships
+ * associated with a given role.
  *
- * The MembershipsServiceImpl class uses the following components:
- * - membershipRepository: a repository that provides access to Membership entities in the database.
- * - roleRepository: a repository that provides access to Role entities in the database.
- * - teamsService: a service that provides operations for Team objects, and is used to validate that a membership belongs to a team.
+ * The MembershipsServiceImpl class uses the following components: - membershipRepository: a
+ * repository that provides access to Membership entities in the database. - roleRepository: a
+ * repository that provides access to Role entities in the database. - teamsService: a service that
+ * provides operations for Team objects, and is used to validate that a membership belongs to a
+ * team.
  *
  * The class uses Lombok annotations to generate constructor and logger code.
  */
@@ -54,15 +57,18 @@ public class MembershipsServiceImpl implements MembershipsService {
         this.roleRepository = roleRepository;
         this.teamsService = teamsService;
     }
-    /**
 
-     Assigns a role to a membership by creating a new membership object with the provided role and
-     saving it to the membership repository.
-     @param m The membership object to be updated with the new role.
-     @return The updated membership object with the assigned role.
-     @throws ResourceExistsException If a membership with the same user ID and team ID already exists.
-     @throws ResourceNotFoundException If the provided role or team do not exist or if the user is not a member of the team.
-     @throws InvalidArgumentException If the provided membership does not have a role.
+    /**
+     * 
+     * Assigns a role to a membership by creating a new membership object with the provided role and
+     * saving it to the membership repository.
+     * 
+     * @param m The membership object to be updated with the new role.
+     * @return The updated membership object with the assigned role.
+     * @throws ResourceExistsException If a membership with the same user ID and team ID already exists.
+     * @throws ResourceNotFoundException If the provided role or team do not exist or if the user is not
+     *         a member of the team.
+     * @throws InvalidArgumentException If the provided membership does not have a role.
      */
     @Override
     public Membership assignRoleToMembership(@NonNull Membership m) {
@@ -74,7 +80,8 @@ public class MembershipsServiceImpl implements MembershipsService {
         if (membershipRepository.findByUserIdAndTeamId(m.getUserId(), m.getTeamId())
                 .isPresent()) {
             // log the error
-            log.error("Membership with user id {} and team id {} already exists.", m.getUserId(), m.getTeamId());
+            log.error("Membership with user id {} and team id {} already exists.", m.getUserId(),
+                    m.getTeamId());
             throw new ResourceExistsException(Membership.class);
         }
 
@@ -92,15 +99,18 @@ public class MembershipsServiceImpl implements MembershipsService {
 
         // save the membership and log the success
         Membership membership = membershipRepository.save(m);
-        log.info("Membership created for user {} in team {} with role {}.", membership.getUserId(), membership.getTeamId(), membership.getRole().getName());
+        log.info("Membership created for user {} in team {} with role {}.", membership.getUserId(),
+                membership.getTeamId(), membership.getRole().getName());
         return membership;
     }
-    /**
 
-     Returns a list of all {@link Membership}s that have the given role ID.
-     @param rid the ID of the role to search memberships for
-     @return a list of all memberships that have the given role ID
-     @throws ResourceNotFoundException if the role with the given ID does not exist
+    /**
+     * 
+     * Returns a list of all {@link Membership}s that have the given role ID.
+     * 
+     * @param rid the ID of the role to search memberships for
+     * @return a list of all memberships that have the given role ID
+     * @throws ResourceNotFoundException if the role with the given ID does not exist
      */
     @Override
     public List<Membership> getMemberships(@NonNull UUID rid) {

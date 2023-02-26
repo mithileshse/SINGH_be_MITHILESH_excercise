@@ -7,6 +7,7 @@ import com.ecore.roles.service.TeamsService;
 import lombok.extern.log4j.Log4j2;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,8 +37,16 @@ public class TeamsServiceImpl implements TeamsService {
 
     public List<Team> getTeams() {
         log.info("Retrieving all teams");
-        List<Team> teams = teamsClient.getTeams().getBody();
-        log.info("Retrieved {} teams", teams.size());
+        List<Team> teams = null;
+        ResponseEntity<List<Team>> responseEntity = teamsClient.getTeams();
+        if (responseEntity != null && responseEntity.getBody() != null) {
+            teams = responseEntity.getBody();
+            if (teams != null) {
+                log.info("Retrieved {} teams", teams.size());
+            } else {
+                log.error("Failed to retrieve teams: response is null");
+            }
+        }
         return teams;
     }
 }

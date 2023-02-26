@@ -37,12 +37,14 @@ public class RolesServiceImpl implements RolesService {
         this.roleRepository = roleRepository;
         this.membershipRepository = membershipRepository;
     }
-    /**
 
-     Creates a new role.
-     @param r The role to create.
-     @return The created role.
-     @throws ResourceExistsException if a role with the same name already exists.
+    /**
+     * 
+     * Creates a new role.
+     * 
+     * @param r The role to create.
+     * @return The created role.
+     * @throws ResourceExistsException if a role with the same name already exists.
      */
     @Override
     public Role createRole(@NonNull Role r) {
@@ -58,11 +60,12 @@ public class RolesServiceImpl implements RolesService {
     }
 
     /**
-
-     Retrieves a {@link Role} entity from the repository by the given ID.
-     @param rid the ID of the role to retrieve
-     @return the retrieved role entity
-     @throws ResourceNotFoundException if a role with the given ID does not exist
+     * 
+     * Retrieves a {@link Role} entity from the repository by the given ID.
+     * 
+     * @param rid the ID of the role to retrieve
+     * @return the retrieved role entity
+     * @throws ResourceNotFoundException if a role with the given ID does not exist
      */
     @Override
     public Role getRole(@NonNull UUID rid) {
@@ -73,10 +76,12 @@ public class RolesServiceImpl implements RolesService {
         log.info("Retrieved role {}", role.getName());
         return role;
     }
-    /**
 
-     Retrieves a list of all roles.
-     @return A list of all roles.
+    /**
+     * 
+     * Retrieves a list of all roles.
+     * 
+     * @return A list of all roles.
      */
     @Override
     public List<Role> getRoles() {
@@ -88,12 +93,14 @@ public class RolesServiceImpl implements RolesService {
     }
 
     /**
-
-     Retrieves the role for the user with the specified ID on the specified team.
-     @param userId The ID of the user.
-     @param teamId The ID of the team.
-     @return The role of the user on the team.
-     @throws ResourceNotFoundException If the specified team does not exist or the user is not a member of the team.
+     * 
+     * Retrieves the role for the user with the specified ID on the specified team.
+     * 
+     * @param userId The ID of the user.
+     * @param teamId The ID of the team.
+     * @return The role of the user on the team.
+     * @throws ResourceNotFoundException If the specified team does not exist or the user is not a
+     *         member of the team.
      */
     @Override
     public Role getRoleByUserIdAndTeamId(UUID userId, UUID teamId) {

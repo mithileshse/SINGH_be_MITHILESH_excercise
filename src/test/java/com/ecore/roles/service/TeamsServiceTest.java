@@ -40,18 +40,18 @@ class TeamsServiceTest {
                         .body(ordinaryCoralLynxTeam));
         assertNotNull(teamsService.getTeam(ORDINARY_CORAL_LYNX_TEAM_UUID));
     }
-    
+
     @Test
     void shouldGetAllTeams() {
-    	when(teamsClient.getTeams())
-    	.thenReturn(ResponseEntity
-    			.status(HttpStatus.OK).body(DEFAULT_TEAMS()));
-    	
-    	List<Team> teams = teamsService.getTeams();
-    	
-    	assertThat(teams.size()).isEqualTo(3);
-    	assertEquals(ORDINARY_CORAL_LYNX_TEAM_UUID, teams.get(0).getId());
-    	assertEquals(WEEKLY_PEACH_WILDEBEEST_TEAM_UUID, teams.get(1).getId());  
-    	assertEquals(SURROUNDING_GOLD_PHEASANT_TEAM_UUID, teams.get(2).getId());  
+        when(teamsClient.getTeams())
+                .thenReturn(ResponseEntity
+                        .status(HttpStatus.OK).body(DEFAULT_TEAMS()));
+
+        List<Team> teams = teamsService.getTeams();
+
+        assertThat(teams).hasSize(3);
+        assertEquals(ORDINARY_CORAL_LYNX_TEAM_UUID, teams.get(0).getId());
+        assertEquals(WEEKLY_PEACH_WILDEBEEST_TEAM_UUID, teams.get(1).getId());
+        assertEquals(SURROUNDING_GOLD_PHEASANT_TEAM_UUID, teams.get(2).getId());
     }
 }

@@ -24,7 +24,6 @@ import static org.mockito.Mockito.when;
 
 import java.util.List;
 
-
 @ExtendWith(MockitoExtension.class)
 class UsersServiceTest {
 
@@ -43,18 +42,18 @@ class UsersServiceTest {
 
         assertNotNull(usersService.getUser(UUID_1));
     }
-    
+
     @Test
-    void shouldGetAllUsers() {    	
-    	when(usersClient.getUsers())
-    	.thenReturn(ResponseEntity
-    			.status(HttpStatus.OK).body(DEFAULT_USERS()));
-    	
-    	List<User> users = usersService.getUsers();
-    	
-    	assertThat(users.size()).isEqualTo(3);
-    	assertEquals(GIANNI_USER_UUID, users.get(0).getId());
-    	assertEquals(JAREN_USER_UUID, users.get(1).getId());  
-    	assertEquals(MARION_USER_UUID, users.get(2).getId());  
+    void shouldGetAllUsers() {
+        when(usersClient.getUsers())
+                .thenReturn(ResponseEntity
+                        .status(HttpStatus.OK).body(DEFAULT_USERS()));
+
+        List<User> users = usersService.getUsers();
+
+        assertThat(users).hasSize(3);
+        assertEquals(GIANNI_USER_UUID, users.get(0).getId());
+        assertEquals(JAREN_USER_UUID, users.get(1).getId());
+        assertEquals(MARION_USER_UUID, users.get(2).getId());
     }
 }

@@ -22,7 +22,7 @@ import static java.lang.String.format;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class MembershipsApiTests {
+class MembershipsApiTests {
 
     private final MembershipRepository membershipRepository;
     private final RestTemplate restTemplate;
@@ -120,7 +120,8 @@ public class MembershipsApiTests {
         mockGetTeamById(mockServer, expectedMembership.getTeamId(), null);
 
         createMembership(expectedMembership)
-                .validate(HttpStatus.NOT_FOUND.value(), format("Team %s not found", expectedMembership.getTeamId()));
+                .validate(HttpStatus.NOT_FOUND.value(),
+                        format("Team %s not found", expectedMembership.getTeamId()));
     }
 
     @Test
@@ -142,7 +143,7 @@ public class MembershipsApiTests {
                 .statusCode(HttpStatus.OK.value())
                 .extract().as(MembershipDto[].class);
 
-        assertThat(actualMemberships.length).isEqualTo(1);
+        assertThat(actualMemberships).hasSize(1);
         assertThat(actualMemberships[0].getId()).isNotNull();
         assertThat(actualMemberships[0]).isEqualTo(MembershipDto.fromModel(expectedMembership));
     }
@@ -152,8 +153,8 @@ public class MembershipsApiTests {
         MembershipDto[] actualMemberships = getMemberships(DEVELOPER_ROLE_UUID)
                 .statusCode(HttpStatus.OK.value())
                 .extract().as(MembershipDto[].class);
-
-        assertThat(actualMemberships.length).isEqualTo(0);
+        // validate length to be zero
+        assertThat(actualMemberships).isEmpty();
     }
 
     @Test
