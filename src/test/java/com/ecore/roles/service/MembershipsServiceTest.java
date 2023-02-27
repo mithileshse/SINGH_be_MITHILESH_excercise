@@ -1,5 +1,6 @@
 package com.ecore.roles.service;
 
+import com.ecore.roles.client.model.Team;
 import com.ecore.roles.exception.InvalidArgumentException;
 import com.ecore.roles.exception.ResourceExistsException;
 import com.ecore.roles.model.Membership;
@@ -16,6 +17,7 @@ import java.util.Optional;
 
 import static com.ecore.roles.utils.TestData.DEFAULT_MEMBERSHIP;
 import static com.ecore.roles.utils.TestData.DEVELOPER_ROLE;
+import static com.ecore.roles.utils.TestData.ORDINARY_CORAL_LYNX_TEAM;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -38,17 +40,26 @@ class MembershipsServiceTest {
     @Mock
     private TeamsService teamsService;
 
+    // JUnit5 is more tolerant regarding the visibilities of Test classes than JUnit4,
+    // which required everything to be public.
+    // In this context, JUnit5 test classes can have any visibility but private,
+    // however, it is recommended to use
+    // the default package visibility, which improves readability of code.
     @Test
-    public void shouldCreateMembership() {
+    void shouldCreateMembership() {
         Membership expectedMembership = DEFAULT_MEMBERSHIP();
+        Team expectedTeam = ORDINARY_CORAL_LYNX_TEAM();
+
         when(roleRepository.findById(expectedMembership.getRole().getId()))
                 .thenReturn(Optional.ofNullable(DEVELOPER_ROLE()));
+
         when(membershipRepository.findByUserIdAndTeamId(expectedMembership.getUserId(),
                 expectedMembership.getTeamId()))
                         .thenReturn(Optional.empty());
-        when(membershipRepository
-                .save(expectedMembership))
-                        .thenReturn(expectedMembership);
+
+        when(teamsService.getTeam(expectedMembership.getTeamId())).thenReturn(expectedTeam);
+
+        when(membershipRepository.save(expectedMembership)).thenReturn(expectedMembership);
 
         Membership actualMembership = membershipsService.assignRoleToMembership(expectedMembership);
 
@@ -58,13 +69,12 @@ class MembershipsServiceTest {
     }
 
     @Test
-    public void shouldFailToCreateMembershipWhenMembershipsIsNull() {
-        assertThrows(NullPointerException.class,
-                () -> membershipsService.assignRoleToMembership(null));
+    void shouldFailToCreateMembershipWhenMembershipsIsNull() {
+        assertThrows(NullPointerException.class, () -> membershipsService.assignRoleToMembership(null));
     }
 
     @Test
-    public void shouldFailToCreateMembershipWhenItExists() {
+    void shouldFailToCreateMembershipWhenItExists() {
         Membership expectedMembership = DEFAULT_MEMBERSHIP();
         when(membershipRepository.findByUserIdAndTeamId(expectedMembership.getUserId(),
                 expectedMembership.getTeamId()))
@@ -80,7 +90,7 @@ class MembershipsServiceTest {
     }
 
     @Test
-    public void shouldFailToCreateMembershipWhenItHasInvalidRole() {
+    void shouldFailToCreateMembershipWhenItHasInvalidRole() {
         Membership expectedMembership = DEFAULT_MEMBERSHIP();
         expectedMembership.setRole(null);
 
@@ -95,9 +105,8 @@ class MembershipsServiceTest {
     }
 
     @Test
-    public void shouldFailToGetMembershipsWhenRoleIdIsNull() {
-        assertThrows(NullPointerException.class,
-                () -> membershipsService.getMemberships(null));
+    void shouldFailToGetMembershipsWhenRoleIdIsNull() {
+        assertThrows(NullPointerException.class, () -> membershipsService.getMemberships(null));
     }
 
 }
